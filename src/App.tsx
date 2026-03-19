@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import { getSummonerByName } from './lib/riot'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,9 +22,10 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+        <input type="text" placeholder="Enter your summoner name" />
         <button
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => getSummonerByName("jjam02", "UCLA")}
         >
           Count is {count}
         </button>
