@@ -1,6 +1,7 @@
-import { getSummonerByName } from "../lib/riot";
+import { useSummoner } from "../hooks/useSummoner";
 
 function SearchBar() {
+    const { searchSummoner, loading, error } = useSummoner();
 
     function handleSearch() {
         const usernameInput = document.getElementById("username") as HTMLInputElement;
@@ -9,7 +10,7 @@ function SearchBar() {
         const username = usernameInput.value;
         const tag = tagInput.value;
 
-        getSummonerByName(username, tag);
+        searchSummoner(username, tag);
     }
     return (
         <div className="search-bar">
@@ -18,6 +19,8 @@ function SearchBar() {
             <button className="counter" onClick={handleSearch} >
                 Get Summoner Info
             </button>
+            <div>{loading && <p>Loading...</p>}</div>
+            <div>{error && <p style={{ color: 'red' }}>{error}</p>}</div>
         </div>
     );
 }
