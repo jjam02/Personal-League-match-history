@@ -25,7 +25,7 @@ export async function getSummonerByPuuid(puuid: string) {
 
 export async function getMatchHistoryByPuuid(puuid: string) {
   const response = await fetch(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=5`,
+    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10`,
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
