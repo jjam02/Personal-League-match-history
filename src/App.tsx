@@ -4,9 +4,12 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import SearchBar from './components/SearchBar'
+import MatchCard from './components/MatchCard'
+import { useSummoner } from './hooks/useSummoner'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { searchSummoner, loading, error, matches } = useSummoner();
+
 
   return (
     <>
@@ -22,7 +25,10 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <SearchBar />
+        <SearchBar searchSummoner={searchSummoner} loading={loading} />
+        <MatchCard matches={matches} />
+        <div>{error && <p style={{ color: 'red' }}>{error}</p>}</div>
+
 
       </section>
 

@@ -1,7 +1,10 @@
 import { useSummoner } from "../hooks/useSummoner";
 
-function SearchBar() {
-    const { searchSummoner, loading, error } = useSummoner();
+interface SearchBarProps {
+    searchSummoner: (summonerName: string, summonerTag: string) => void;
+    loading: boolean;
+}
+function SearchBar({ searchSummoner, loading }: SearchBarProps) {
 
     function handleSearch() {
         const usernameInput = document.getElementById("username") as HTMLInputElement;
@@ -20,7 +23,6 @@ function SearchBar() {
                 Get Summoner Info
             </button>
             <div>{loading && <p>Loading...</p>}</div>
-            <div>{error && <p style={{ color: 'red' }}>{error}</p>}</div>
         </div>
     );
 }
