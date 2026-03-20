@@ -11,8 +11,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -108,4 +108,24 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+.teams {
+  border: #08060d solid 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.team {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  flex-grow: 1;
+}
+
+.team#blue-team {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+.team#red-team {
+  background-color: rgba(255, 0, 0, 0.1);
 }
