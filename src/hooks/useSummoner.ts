@@ -16,6 +16,7 @@ export function useSummoner() {
 
     try {
       setError(null); // Clear error on new search
+      setMatches([]); // Clear previous matches on new search
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
       const summonerInGameData = await getSummonerByPuuid(puuid);
