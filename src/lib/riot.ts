@@ -9,7 +9,7 @@ export async function getPuuidByName(
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
-  console.log("PUUID DATA", data); // keep this for testing
+  ////console.log("PUUID DATA", data); // keep this for testing
   return data;
 }
 
@@ -19,7 +19,7 @@ export async function getSummonerByPuuid(puuid: string) {
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
-  console.log("SUMMONER DATA", data); // keep this for testing
+  //console.log("SUMMONER DATA", data); // keep this for testing
   return data;
 }
 
@@ -29,7 +29,7 @@ export async function getMatchHistoryByPuuid(puuid: string) {
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
-  console.log("MATCH HISTORY 5 MATCHES", data); // keep this for testing
+  ////console.log("MATCH HISTORY 5 MATCHES", data); // keep this for testing
   return data;
 }
 
@@ -39,6 +39,6 @@ export async function getMatchDetailsByMatchID(matchID: string) {
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
-  console.log("MATCH DETAILS", data); // keep this for testing
+  ////console.log("MATCH DETAILS", data); // keep this for testing
   return data;
 }

@@ -8,6 +8,7 @@ export interface Summoner {
 
 export interface Match {
   matchID: string;
+  summoner_puuid: string;
   champion: string;
   kills: number;
   deaths: number;

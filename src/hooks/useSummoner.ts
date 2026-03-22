@@ -6,6 +6,8 @@ import {
   getMatchDetailsByMatchID,
 } from "../lib/riot";
 
+import { addSummoner, supabase, addMatchHistory } from "../lib/supabase";
+
 export function useSummoner() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -19,12 +21,14 @@ export function useSummoner() {
       setMatches([]); // Clear previous matches on new search
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
+      await addSummoner(puuid, summonerName, summonerTag);
       const summonerInGameData = await getSummonerByPuuid(puuid);
       const matchHistory = await getMatchHistoryByPuuid(puuid);
       const matchDetailsPromises = matchHistory.map((matchID: string) =>
         getMatchDetailsByMatchID(matchID),
       );
       const matchDetails = await Promise.all(matchDetailsPromises);
+      addMatchHistory(puuid, matchDetails);
       setMatches(matchDetails);
     } catch (err) {
       //console.error(err);
