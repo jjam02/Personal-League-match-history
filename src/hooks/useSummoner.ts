@@ -6,7 +6,7 @@ import {
   getMatchDetailsByMatchID,
 } from "../lib/riot";
 
-import { addSummoner, supabase, addMatchHistory } from "../lib/supabase";
+import { addSummoner, addMatchHistory, getPuuidDB } from "../lib/supabase";
 
 export function useSummoner() {
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,8 @@ export function useSummoner() {
     try {
       setError(null); // Clear error on new search
       setMatches([]); // Clear previous matches on new search
+      const existingSummoner = await getPuuidDB(summonerName, summonerTag);
+      console.log("EXISTING SUMMONER", existingSummoner); // keep this for testing
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
       await addSummoner(puuid, summonerName, summonerTag);

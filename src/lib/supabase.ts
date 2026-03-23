@@ -50,3 +50,15 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
 
   if (error) console.error("addMatchHistory error:", error);
 }
+
+export async function getPuuidDB(summonerName: string, summonerTag: string) {
+  const { data, error } = await supabase
+    .from("summoners")
+    .select("puuid")
+    .eq("summoner_name", summonerName)
+    .eq("summoner_tag", summonerTag)
+    .single();
+
+  console.log(data, error); // keep this for testing
+  return data ? data.puuid : null;
+}
