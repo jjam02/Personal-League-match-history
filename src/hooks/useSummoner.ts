@@ -6,7 +6,13 @@ import {
   getMatchDetailsByMatchID,
 } from "../lib/riot";
 
-import { addSummoner, addMatchHistory, getPuuidDB } from "../lib/supabase";
+import {
+  addSummoner,
+  addMatchHistory,
+  getPuuidDB,
+  getMatchesDB,
+  cleanMatchData,
+} from "../lib/supabase";
 
 export function useSummoner() {
   const [loading, setLoading] = useState(false);
@@ -20,7 +26,14 @@ export function useSummoner() {
       setError(null); // Clear error on new search
       setMatches([]); // Clear previous matches on new search
       const existingSummoner = await getPuuidDB(summonerName, summonerTag);
-      console.log("EXISTING SUMMONER", existingSummoner); // keep this for testing
+      if (existingSummoner) {
+        console.log("SUMMONER FOUND IN DB, FETCHING MATCHES"); // keep this for testing
+        const puuid = existingSummoner;
+        const matchHistory = await getMatchesDB(puuid);
+        setMatches(matchHistory);
+        return;
+      }
+      console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API"); // keep this for testing
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
       await addSummoner(puuid, summonerName, summonerTag);
@@ -31,7 +44,8 @@ export function useSummoner() {
       );
       const matchDetails = await Promise.all(matchDetailsPromises);
       addMatchHistory(puuid, matchDetails);
-      setMatches(matchDetails);
+      setMatches(cleanMatchData(matchDetails, puuid));
+      console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {
       //console.error(err);
       setError("Failed to fetch summoner data");

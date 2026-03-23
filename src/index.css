@@ -110,22 +110,18 @@ code {
   background: var(--code-bg);
 }
 
-.teams {
-  border: #08060d solid 1px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.team {
+.match-card-item {
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+  text-align: left;
   font-size: 0.75rem;
-  line-height: 1rem;
-  flex-grow: 1;
 }
 
-.team#blue-team {
-  background-color: rgba(0, 0, 255, 0.1);
+.match-card-item.win {
+  background-color: #28344e;
 }
-.team#red-team {
-  background-color: rgba(255, 0, 0, 0.1);
+
+.match-card-item.loss {
+  background-color: #59343b;
 }
