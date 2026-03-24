@@ -1,4 +1,4 @@
-import { calculateKDA } from "../util/util";
+import { calculateKDA, getMostPLayedChampion } from "../util/util";
 
 interface StatsSummaryProps {
     matches: any[];
@@ -17,7 +17,7 @@ function StatsSummary({ matches }: StatsSummaryProps) {
                     matches.reduce((sum, match) => sum + match.assists, 0),
                 )}</p>
                 <p>{matches.reduce((sum, match) => sum + match.kills, 0) / matches.length || 0}/{matches.reduce((sum, match) => sum + match.deaths, 0) / matches.length || 0}/{matches.reduce((sum, match) => sum + match.assists, 0) / matches.length || 0}</p>
-
+                <p>most played: {getMostPLayedChampion(matches)}</p>
             </div>
         ) : null
     )
