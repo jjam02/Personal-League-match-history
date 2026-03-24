@@ -1,32 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import SearchBar from './components/SearchBar'
 import MatchCard from './components/MatchCard'
+import StatsSummary from './components/StatsSummary'
 import { useSummoner } from './hooks/useSummoner'
 
 function App() {
   const { searchSummoner, loading, error, matches } = useSummoner();
+  const [patch, setPatch] = useState('16.6.1') // fallback if fetch fails
+
+  useEffect(() => {
+    fetch('https://ddragon.leagueoflegends.com/api/versions.json')
+      .then(res => res.json())
+      .then(versions => setPatch(versions[0]))
+      .catch(() => console.error('Failed to fetch patch version'))
+  }, []) // empty dependency array = runs once on mount
 
 
   return (
     <>
       <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+          <h1>League of Legends Match History</h1>
+          <p>Enter your summoner name and tag to view your recent match history and performance metrics.</p>
         </div>
         <SearchBar searchSummoner={searchSummoner} loading={loading} />
-        <MatchCard matches={matches} />
+        <StatsSummary matches={matches} />
+        <MatchCard matches={matches} patch={patch} />
         <div>{error && <p style={{ color: 'red' }}>{error}</p>}</div>
 
 

@@ -45,7 +45,7 @@ export function useSummoner() {
       const matchDetails = await Promise.all(matchDetailsPromises);
       addMatchHistory(puuid, matchDetails);
       setMatches(cleanMatchData(matchDetails, puuid));
-      console.log("MATCHES STATE:", matches); // keep this for testing
+      // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {
       //console.error(err);
       setError("Failed to fetch summoner data");

@@ -35,3 +35,17 @@ export const QUEUE_TYPES: Record<number, string> = {
   900: "ARURF",
   480: "Swiftplay",
 };
+
+export const SUMMONER_SPELLS: Record<number, string> = {
+  21: "SummonerBarrier",
+  1: "SummonerBoost",
+  14: "SummonerDot",
+  3: "SummonerExhaust",
+  4: "SummonerFlash",
+  6: "SummonerHaste",
+  7: "SummonerHeal",
+  13: "SummonerMana",
+  11: "SummonerSmite",
+  32: "SummonerSnowball",
+  12: "SummonerTeleport",
+};

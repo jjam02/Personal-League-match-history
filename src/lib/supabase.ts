@@ -41,6 +41,9 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
       win: participant.win,
       duration_seconds: match.info.gameDuration,
       played_at: new Date(match.info.gameStartTimestamp).toISOString(),
+      queue_id: match.info.queueId,
+      summoner_spell1: participant.summoner1Id,
+      summoner_spell2: participant.summoner2Id,
     };
   });
   ////console.log("MATCH ROWS", matchRows); // keep this for testing
@@ -88,6 +91,9 @@ export function cleanMatchData(matchArray: any[], puuid: string) {
       win: participant.win,
       duration_seconds: match.info.gameDuration,
       played_at: new Date(match.info.gameStartTimestamp).toISOString(),
+      queue_id: match.info.queueId,
+      summoner_spell1: participant.summoner1Id,
+      summoner_spell2: participant.summoner2Id,
     };
   });
   return cleanMatchData;
