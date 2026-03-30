@@ -1,9 +1,10 @@
 export interface Summoner {
-  id: string;
-  name: string;
-  puuid: string;
   profileIconId: number;
+  puuid: string;
+  revision_date: string;
   summonerLevel: number;
+  username: string;
+  tag: string;
 }
 
 export interface Match {

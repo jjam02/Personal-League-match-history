@@ -21,3 +21,7 @@ export default defineConfig([
     },
   },
 ])
+
+module.exports = {
+  "editor.formatOnSave": true,
+}
