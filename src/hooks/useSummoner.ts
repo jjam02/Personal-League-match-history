@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   getSummonerByPuuid,
   getPuuidByName,
   getMatchHistoryByPuuid,
   getMatchDetailsByMatchID,
+  getUsernameTagByPuuid,
 } from "../lib/riot";
 
 import {
@@ -42,11 +43,12 @@ export function useSummoner() {
       console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API"); // keep this for testing
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
+      const usernameTagData = await getUsernameTagByPuuid(puuid);
       const summonerInGameData = await getSummonerByPuuid(puuid);
       await addSummoner(
         puuid,
-        summonerName,
-        summonerTag,
+        usernameTagData.gameName,
+        usernameTagData.tagLine,
         summonerInGameData.profileIconId,
         summonerInGameData.summonerLevel,
       );

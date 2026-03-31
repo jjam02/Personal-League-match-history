@@ -23,6 +23,16 @@ export async function getSummonerByPuuid(puuid: string) {
   return data;
 }
 
+export async function getUsernameTagByPuuid(puuid: string) {
+  const response = await fetch(
+    `https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/${puuid}`,
+    { headers: { "X-Riot-Token": apiKeyRiot } },
+  );
+  const data = await response.json();
+  //console.log("USERNAME AND TAG DATA", data); // keep this for testing
+  return data;
+}
+
 export async function getMatchHistoryByPuuid(puuid: string) {
   const response = await fetch(
     `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10`,
