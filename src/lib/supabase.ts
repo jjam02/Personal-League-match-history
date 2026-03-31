@@ -17,8 +17,8 @@ export async function addSummoner(
 ) {
   const { data, error } = await supabase.from("summoners").upsert(
     {
-      summoner_name: summonerName.toLowerCase(),
-      summoner_tag: summonerTag.toLowerCase(),
+      summoner_name: summonerName,
+      summoner_tag: summonerTag,
       puuid: puuid,
       icon_id: icon_id,
       level: level,
