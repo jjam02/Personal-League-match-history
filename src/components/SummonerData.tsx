@@ -5,7 +5,7 @@ interface SummonerDataProps {
 }
 
 function SummonerData({ profile }: SummonerDataProps) {
-  console.log("SUMMONER PROFILE DATA", profile);
+  //console.log("SUMMONER PROFILE DATA", profile);
   return (
     <>
       {profile && (

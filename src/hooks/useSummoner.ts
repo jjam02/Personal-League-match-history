@@ -60,12 +60,12 @@ export function useSummoner() {
       addMatchHistory(puuid, matchDetails);
       setMatches(cleanMatchData(matchDetails, puuid));
 
-      (setProfile({
-        ...summonerInGameData,
-        username: summonerName,
-        tag: summonerTag,
-      }),
-        console.log(profile));
+      setProfile({
+        icon_id: summonerInGameData.profileIconId,
+        level: summonerInGameData.summonerLevel,
+        summoner_name: usernameTagData.gameName,
+        summoner_tag: usernameTagData.tagLine,
+      });
 
       // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {
