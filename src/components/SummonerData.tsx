@@ -5,20 +5,19 @@ interface SummonerDataProps {
 }
 
 function SummonerData({ profile }: SummonerDataProps) {
-  //  console.log("SUMMONER PROFILE DATA", profile);
+  console.log("SUMMONER PROFILE DATA", profile);
   return (
     <>
-      summoner data
       {profile && (
         <div>
           <h1>
-            {profile.username}#{profile.tag}
+            {profile.summoner_name}#{profile.summoner_tag}
           </h1>
           <img
-            src={`https://ddragon.leagueoflegends.com/cdn/16.6.1/img/profileicon/${profile.profileIconId}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/16.6.1/img/profileicon/${profile.icon_id}.png`}
             alt="Profile Icon"
           />
-          <p>Summoner Level: {profile.summonerLevel}</p>
+          <p>Summoner Level: {profile.level}</p>
         </div>
       )}
     </>

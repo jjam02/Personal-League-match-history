@@ -9,7 +9,7 @@ import {
 import {
   addSummoner,
   addMatchHistory,
-  getPuuidDB,
+  getSummonerDB,
   getMatchesDB,
   cleanMatchData,
 } from "../lib/supabase";
@@ -29,19 +29,14 @@ export function useSummoner() {
       setError(null); // Clear error on new search
       setMatches([]); // Clear previous matches on new search
       setProfile(null); // Clear previous profile on new search
-      const existingSummoner = await getPuuidDB(summonerName, summonerTag);
+      const existingSummoner = await getSummonerDB(summonerName, summonerTag);
       if (existingSummoner) {
         console.log("SUMMONER FOUND IN DB, FETCHING MATCHES"); // keep this for testing
-        const puuid = existingSummoner;
-        const matchHistory = await getMatchesDB(puuid);
+        const summonerData = existingSummoner;
+        const matchHistory = await getMatchesDB(summonerData.puuid);
         setMatches(matchHistory);
-        const summonerInGameData = await getSummonerByPuuid(puuid);
-        summonerInGameData.setAttribute("username", summonerName);
-        summonerInGameData.setAttribute("tag", summonerTag);
-        console.log("SUMMONER IN-GAME DATA", summonerInGameData); // keep this for testing
-
-        setProfile(summonerInGameData);
-        console.log(profile);
+        setProfile(existingSummoner);
+        console.log("set the profile", profile);
         return;
       }
       console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API"); // keep this for testing
@@ -62,10 +57,13 @@ export function useSummoner() {
       const matchDetails = await Promise.all(matchDetailsPromises);
       addMatchHistory(puuid, matchDetails);
       setMatches(cleanMatchData(matchDetails, puuid));
-      summonerInGameData.setAttribute("username", summonerName);
-      summonerInGameData.setAttribute("tag", summonerTag);
-      setProfile(summonerInGameData);
-      console.log(profile);
+
+      (setProfile({
+        ...summonerInGameData,
+        username: summonerName,
+        tag: summonerTag,
+      }),
+        console.log(profile));
 
       // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {

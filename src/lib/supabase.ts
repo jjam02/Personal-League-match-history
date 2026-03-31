@@ -58,17 +58,17 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
   //if (error) //console.error("addMatchHistory error:", error);
 }
 
-export async function getPuuidDB(summonerName: string, summonerTag: string) {
+export async function getSummonerDB(summonerName: string, summonerTag: string) {
   //console.log("GETTING PUUID FROM DB FOR", summonerName, summonerTag); // keep this for testing
   const { data, error } = await supabase
     .from("summoners")
-    .select("puuid")
+    .select("*")
     .eq("summoner_name", summonerName.toLowerCase())
     .eq("summoner_tag", summonerTag.toLowerCase())
     .single();
 
   ////console.log(data, error); // keep this for testing
-  return data ? data.puuid : null;
+  return data || null;
 }
 
 export async function getMatchesDB(puuid: string) {
