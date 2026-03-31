@@ -63,8 +63,8 @@ export async function getSummonerDB(summonerName: string, summonerTag: string) {
   const { data, error } = await supabase
     .from("summoners")
     .select("*")
-    .eq("summoner_name", summonerName.toLowerCase())
-    .eq("summoner_tag", summonerTag.toLowerCase())
+    .ilike("summoner_name", summonerName)
+    .ilike("summoner_tag", summonerTag)
     .single();
 
   ////console.log(data, error); // keep this for testing
