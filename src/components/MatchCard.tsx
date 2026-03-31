@@ -11,9 +11,9 @@ function MatchCard({ matches, patch }: MatchCardProps) {
     <div className={`match-card } `}>
       <h3>Match Card</h3>
 
-      {matches.map((match) => (
+      {matches.map((match, index) => (
         <div
-          key={match.matchId}
+          key={match.matchId ?? index}
           className={`match-card-item ${match.win ? "win" : "loss"}`}
         >
           <div>

@@ -12,12 +12,16 @@ export async function addSummoner(
   puuid: string,
   summonerName: string,
   summonerTag: string,
+  icon_id: number,
+  level: number,
 ) {
   const { data, error } = await supabase.from("summoners").upsert(
     {
       summoner_name: summonerName.toLowerCase(),
       summoner_tag: summonerTag.toLowerCase(),
       puuid: puuid,
+      icon_id: icon_id,
+      level: level,
     },
     { onConflict: "puuid" },
   );

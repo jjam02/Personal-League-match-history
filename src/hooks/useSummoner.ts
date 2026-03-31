@@ -14,7 +14,7 @@ import {
   cleanMatchData,
 } from "../lib/supabase";
 
-import type { Summoner } from "../types/index";
+//import type { Summoner } from "../types/index";
 
 export function useSummoner() {
   const [loading, setLoading] = useState(false);
@@ -41,13 +41,20 @@ export function useSummoner() {
         console.log("SUMMONER IN-GAME DATA", summonerInGameData); // keep this for testing
 
         setProfile(summonerInGameData);
+        console.log(profile);
         return;
       }
       console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API"); // keep this for testing
       const summonerInfo = await getPuuidByName(summonerName, summonerTag);
       const puuid = summonerInfo.puuid;
-      await addSummoner(puuid, summonerName, summonerTag);
       const summonerInGameData = await getSummonerByPuuid(puuid);
+      await addSummoner(
+        puuid,
+        summonerName,
+        summonerTag,
+        summonerInGameData.profileIconId,
+        summonerInGameData.summonerLevel,
+      );
       const matchHistory = await getMatchHistoryByPuuid(puuid);
       const matchDetailsPromises = matchHistory.map((matchID: string) =>
         getMatchDetailsByMatchID(matchID),
@@ -58,6 +65,8 @@ export function useSummoner() {
       summonerInGameData.setAttribute("username", summonerName);
       summonerInGameData.setAttribute("tag", summonerTag);
       setProfile(summonerInGameData);
+      console.log(profile);
+
       // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {
       //console.error(err);
