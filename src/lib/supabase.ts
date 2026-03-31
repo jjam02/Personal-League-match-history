@@ -48,6 +48,13 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
       queue_id: match.info.queueId,
       summoner_spell1: participant.summoner1Id,
       summoner_spell2: participant.summoner2Id,
+      item0: participant.item0,
+      item1: participant.item1,
+      item2: participant.item2,
+      item3: participant.item3,
+      item4: participant.item4,
+      item5: participant.item5,
+      item6: participant.item6,
     };
   });
   ////console.log("MATCH ROWS", matchRows); // keep this for testing
@@ -81,6 +88,7 @@ export async function getMatchesDB(puuid: string) {
 }
 
 export function cleanMatchData(matchArray: any[], puuid: string) {
+  console.log("CLEANING MATCH DATA", matchArray); // keep this for testing
   const cleanMatchData = matchArray.map((match: any) => {
     const participant = match.info.participants.find(
       (p: any) => p.puuid === puuid,
@@ -98,6 +106,13 @@ export function cleanMatchData(matchArray: any[], puuid: string) {
       queue_id: match.info.queueId,
       summoner_spell1: participant.summoner1Id,
       summoner_spell2: participant.summoner2Id,
+      item0: participant.item0,
+      item1: participant.item1,
+      item2: participant.item2,
+      item3: participant.item3,
+      item4: participant.item4,
+      item5: participant.item5,
+      item6: participant.item6,
     };
   });
   return cleanMatchData;

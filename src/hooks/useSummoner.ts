@@ -37,7 +37,7 @@ export function useSummoner() {
         const matchHistory = await getMatchesDB(summonerData.puuid);
         setMatches(matchHistory);
         setProfile(existingSummoner);
-        console.log("set the profile", profile);
+        //console.log("set the profile", profile);
         return;
       }
       console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API"); // keep this for testing
