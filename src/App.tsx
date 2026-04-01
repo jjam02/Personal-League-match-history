@@ -12,13 +12,21 @@ import { useSummoner } from "./hooks/useSummoner";
 function App() {
   const { searchSummoner, loading, error, matches, profile } = useSummoner();
   const [patch, setPatch] = useState("16.6.1"); // fallback if fetch fails
+  const [runes, setRunes] = useState({});
 
   useEffect(() => {
     fetch("https://ddragon.leagueoflegends.com/api/versions.json")
       .then((res) => res.json())
       .then((versions) => setPatch(versions[0]))
       .catch(() => console.error("Failed to fetch patch version"));
-  }, []); // empty dependency array = runs once on mount
+
+    fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${patch}/data/en_US/runesReforged.json`,
+    )
+      .then((res) => res.json())
+      .then((runesData) => setRunes(runesData))
+      .catch(() => console.error("Failed to fetch runes data"));
+  }, [patch]); // empty dependency array = runs once on mount
 
   return (
     <>
