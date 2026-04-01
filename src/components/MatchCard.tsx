@@ -32,69 +32,73 @@ function MatchCard({ matches, patch }: MatchCardProps) {
               {match.duration_seconds % 60}s
             </p>
           </div>
-
           <div>
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/champion/${match.champion}.png`}
-              alt={match.champion}
-              width={64}
-              height={64}
-            />
-          </div>
+            <div className="champion-spells-kda">
+              <div id="champion">
+                <img
+                  src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/champion/${match.champion}.png`}
+                  alt={match.champion}
+                  width={64}
+                  height={64}
+                />
+              </div>
 
-          {match.queue_id !== 1700 && match.queue_id !== 1710 && (
-            <div className="summoner-spells">
-              <img
-                src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell1]}.png`}
-                alt={SUMMONER_SPELLS[match.summoner_spell1]}
-                width={32}
-                height={32}
-              />
-              <img
-                src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell2]}.png`}
-                alt={SUMMONER_SPELLS[match.summoner_spell2]}
-                width={32}
-                height={32}
-              />
+              {match.queue_id !== 1700 && match.queue_id !== 1710 && (
+                <div className="summoner-spells">
+                  <img
+                    src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell1]}.png`}
+                    alt={SUMMONER_SPELLS[match.summoner_spell1]}
+                    width={32}
+                    height={32}
+                  />
+                  <img
+                    src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell2]}.png`}
+                    alt={SUMMONER_SPELLS[match.summoner_spell2]}
+                    width={32}
+                    height={32}
+                  />
+                </div>
+              )}
+
+              <div id="runes" className="summoner-spells">
+                <img
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png`}
+                  alt="keystone"
+                  width={32}
+                  height={32}
+                />
+                <img
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png`}
+                  alt="secondary tree"
+                  width={32}
+                  height={32}
+                />
+              </div>
+
+              <div id="kda">
+                <p>
+                  {match.kills}/{match.deaths}/{match.assists}
+                </p>
+                <p>
+                  {calculateKDA(match.kills, match.deaths, match.assists)} KDA
+                </p>
+              </div>
             </div>
-          )}
-
-          <div className="summoner-spells">
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png`}
-              alt="keystone"
-              width={32}
-              height={32}
-            />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png`}
-              alt="secondary tree"
-              width={32}
-              height={32}
-            />
-          </div>
-
-          <div>
-            <p>
-              {match.kills}/{match.deaths}/{match.assists}
-            </p>
-            <p>{calculateKDA(match.kills, match.deaths, match.assists)} KDA</p>
-          </div>
-
-          <div className="items">
-            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-              <img
-                key={i}
-                src={
-                  match[`item${i}`]
-                    ? `https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${match[`item${i}`]}.png`
-                    : "https://via.placeholder.com/32?text=Empty"
-                }
-                alt={match[`item${i}`] ? `Item ${match[`item${i}`]}` : "Empty"}
-                width={32}
-                height={32}
-              />
-            ))}
+            <div id="items" className="items">
+              {[0, 1, 2, 3, 4, 5, 6].map((i) =>
+                match[`item${i}`] ? (
+                  <img
+                    key={i}
+                    src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${match[`item${i}`]}.png`}
+                    alt="item"
+                    width={32}
+                    height={32}
+                  />
+                ) : (
+                  <div className="empty-item" key={i} />
+                ),
+              )}
+            </div>
           </div>
         </div>
       ))}
