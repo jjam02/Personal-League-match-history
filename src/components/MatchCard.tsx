@@ -7,6 +7,7 @@ interface MatchCardProps {
 }
 
 function MatchCard({ matches, patch }: MatchCardProps) {
+  console.log("RENDERING MATCH CARD WITH MATCHES", matches); // keep this for testing
   return (
     <div className="match-card">
       <h3>Match Card</h3>

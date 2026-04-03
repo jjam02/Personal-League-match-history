@@ -55,6 +55,8 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
       item4: participant.item4,
       item5: participant.item5,
       item6: participant.item6,
+      primary_runes: participant.perks.styles[0],
+      secondary_runes: participant.perks.styles[1],
     };
   });
   ////console.log("MATCH ROWS", matchRows); // keep this for testing
@@ -113,6 +115,8 @@ export function cleanMatchData(matchArray: any[], puuid: string) {
       item4: participant.item4,
       item5: participant.item5,
       item6: participant.item6,
+      primary_runes: participant.perks.styles[0],
+      secondary_runes: participant.perks.styles[1],
     };
   });
   return cleanMatchData;
