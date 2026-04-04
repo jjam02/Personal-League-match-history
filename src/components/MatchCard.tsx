@@ -1,5 +1,6 @@
 import { QUEUE_TYPES, SUMMONER_SPELLS } from "../types";
 import { calculateKDA } from "../util/util";
+import ItemsBar from "./ItemsBar";
 
 interface MatchCardProps {
   matches: any[];
@@ -41,8 +42,8 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
                 <img
                   src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/champion/${match.champion}.png`}
                   alt={match.champion}
-                  width={64}
-                  height={64}
+                  width={48}
+                  height={48}
                 />
               </div>
 
@@ -51,14 +52,14 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
                   <img
                     src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell1]}.png`}
                     alt={SUMMONER_SPELLS[match.summoner_spell1]}
-                    width={32}
-                    height={32}
+                    width={22}
+                    height={22}
                   />
                   <img
                     src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${SUMMONER_SPELLS[match.summoner_spell2]}.png`}
                     alt={SUMMONER_SPELLS[match.summoner_spell2]}
-                    width={32}
-                    height={32}
+                    width={22}
+                    height={22}
                   />
                 </div>
               )}
@@ -70,8 +71,8 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
                     runes[match.primary_runes.selections[0].perk]?.icon
                   }
                   alt="keystone"
-                  width={32}
-                  height={32}
+                  width={22}
+                  height={22}
                 />
                 <img
                   src={
@@ -79,8 +80,8 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
                     runes[match.secondary_runes.style]?.icon
                   }
                   alt="secondary tree"
-                  width={32}
-                  height={32}
+                  width={22}
+                  height={22}
                 />
               </div>
 
@@ -93,21 +94,7 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
                 </p>
               </div>
             </div>
-            <div id="items" className="items">
-              {[0, 1, 2, 3, 4, 5, 6].map((i) =>
-                match[`item${i}`] ? (
-                  <img
-                    key={i}
-                    src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${match[`item${i}`]}.png`}
-                    alt="item"
-                    width={32}
-                    height={32}
-                  />
-                ) : (
-                  <div className="empty-item" key={i} />
-                ),
-              )}
-            </div>
+            <ItemsBar match={match} patch={patch} />
           </div>
         </div>
       ))}

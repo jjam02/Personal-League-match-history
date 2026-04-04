@@ -115,10 +115,11 @@ code {
   flex-direction: row;
   gap: 16px;
   border-radius: 8px;
-  padding: 16px;
+  padding: 0.5rem;
   margin: 8px 0;
   text-align: left;
   font-size: 0.75rem;
+  align-items: center;
 }
 
 .match-card-item.win {
@@ -132,4 +133,5 @@ code {
 .summoner-spells {
   display: flex;
   flex-direction: column;
+  -ms-flex-item-align: center;
 }

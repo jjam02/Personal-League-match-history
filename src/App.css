@@ -161,28 +161,6 @@
   }
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
-}
-
 .Profile-Container {
   display: flex;
   gap: 32px;
@@ -209,8 +187,19 @@
 }
 
 .empty-item {
-  width: 32px;
-  height: 32px;
+  width: 22px;
+  height: 22px;
   background-color: rgb(40, 34, 34);
   display: inline-block;
+}
+.itemRow {
+  display: flex;
+  flex-grow: 3;
+  justify-content: space-between;
+}
+
+.item {
+  flex-grow: 1;
+  max-width: 22px;
+  max-height: 22px;
 }
