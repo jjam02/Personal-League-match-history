@@ -9,9 +9,9 @@ function SummonerData({ profile }: SummonerDataProps) {
     <div className="profile">
       {profile && (
         <>
-          <h1>
+          <h2>
             {profile.summoner_name}#{profile.summoner_tag}
-          </h1>
+          </h2>
           <img
             src={`https://ddragon.leagueoflegends.com/cdn/16.6.1/img/profileicon/${profile.icon_id}.png`}
             alt="Profile Icon"
