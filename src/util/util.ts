@@ -19,3 +19,15 @@ export function getMostPLayedChampion(matches: any[]) {
     championCount[a] > championCount[b] ? a : b,
   );
 }
+
+export function buildRuneMap(data: any[]): Record<number, any> {
+  const map: Record<number, any> = {};
+  data.forEach((style) => {
+    style.slots.forEach((slot: any) => {
+      slot.runes.forEach((rune: any) => {
+        map[rune.id] = rune;
+      });
+    });
+  });
+  return map;
+}

@@ -4,10 +4,12 @@ import { calculateKDA } from "../util/util";
 interface MatchCardProps {
   matches: any[];
   patch: string;
+  runes: Record<number, any>;
 }
 
-function MatchCard({ matches, patch }: MatchCardProps) {
-  console.log("RENDERING MATCH CARD WITH MATCHES", matches); // keep this for testing
+function MatchCard({ matches, patch, runes }: MatchCardProps) {
+  console.log(runes); // keep this for testing
+
   return (
     <div className="match-card">
       <h3>Match Card</h3>
@@ -63,13 +65,19 @@ function MatchCard({ matches, patch }: MatchCardProps) {
 
               <div id="runes" className="summoner-spells">
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png`}
+                  src={
+                    "https://ddragon.leagueoflegends.com/cdn/img/" +
+                    runes[match.primary_runes.selections[0].perk]?.icon
+                  }
                   alt="keystone"
                   width={32}
                   height={32}
                 />
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png`}
+                  src={
+                    "https://ddragon.leagueoflegends.com/cdn/img/" +
+                    runes[match.secondary_runes.style]?.icon
+                  }
                   alt="secondary tree"
                   width={32}
                   height={32}
