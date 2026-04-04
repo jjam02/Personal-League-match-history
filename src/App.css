@@ -207,8 +207,6 @@
   flex: 2;
 }
 .profile {
-  outline: auto 1px var(--border);
-
   flex: 1;
 }
 
