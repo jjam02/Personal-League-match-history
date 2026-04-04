@@ -164,9 +164,8 @@
 .Profile-Container {
   display: flex;
   gap: 32px;
-  justify-content: center;
   align-items: flex-start;
-  margin-top: 32px;
+  margin: 1rem;
 
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -202,4 +201,28 @@
   flex-grow: 1;
   max-width: 22px;
   max-height: 22px;
+}
+
+.Stats-Match-Container {
+  flex: 2;
+}
+.profile {
+  outline: auto 1px var(--border);
+
+  flex: 1;
+}
+
+.stats-summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  margin-bottom: 10px;
+}
+
+#most-played {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
 }

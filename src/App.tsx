@@ -30,25 +30,23 @@ function App() {
 
   return (
     <>
-      <section id="center">
-        <div>
-          <h1>League of Legends Match History</h1>
-          <p>
-            Enter your summoner name and tag to view your recent match history
-            and performance metrics.
-          </p>
+      <div>
+        <h1>League of Legends Match History</h1>
+        <p>
+          Enter your summoner name and tag to view your recent match history and
+          performance metrics.
+        </p>
+      </div>
+      <SearchBar searchSummoner={searchSummoner} loading={loading} />
+      <div className="Profile-Container">
+        <SummonerData profile={profile} />
+        <div className="Stats-Match-Container">
+          <StatsSummary matches={matches} patch={patch} />
+          <MatchCard matches={matches} patch={patch} runes={runes} />
         </div>
-        <SearchBar searchSummoner={searchSummoner} loading={loading} />
-        <div className="Profile-Container">
-          <SummonerData profile={profile} />
-          <div>
-            <StatsSummary matches={matches} />
-            <MatchCard matches={matches} patch={patch} runes={runes} />
-          </div>
-        </div>
+      </div>
 
-        <div>{error && <p>{error}</p>}</div>
-      </section>
+      <div>{error && <p>{error}</p>}</div>
 
       <div className="ticks"></div>
 

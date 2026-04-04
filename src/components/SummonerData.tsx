@@ -5,11 +5,10 @@ interface SummonerDataProps {
 }
 
 function SummonerData({ profile }: SummonerDataProps) {
-  //console.log("SUMMONER PROFILE DATA", profile);
   return (
-    <>
+    <div className="profile">
       {profile && (
-        <div>
+        <>
           <h1>
             {profile.summoner_name}#{profile.summoner_tag}
           </h1>
@@ -18,9 +17,9 @@ function SummonerData({ profile }: SummonerDataProps) {
             alt="Profile Icon"
           />
           <p>Summoner Level: {profile.level}</p>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-function ItemsBar({ match, patch }: { match: Match; patch: string }) {
+function ItemsBar({ match, patch }: { match: any; patch: string }) {
   return (
     <div id="items" className="itemRow">
       {[0, 1, 2, 3, 4, 5, 6].map((i) =>
