@@ -23,6 +23,12 @@ export function getMostPLayedChampion(matches: any[]) {
 export function buildRuneMap(data: any[]): Record<number, any> {
   const map: Record<number, any> = {};
   data.forEach((style) => {
+    map[style.id] = {
+      id: style.id,
+      key: style.key,
+      icon: style.icon,
+      name: style.name,
+    };
     style.slots.forEach((slot: any) => {
       slot.runes.forEach((rune: any) => {
         map[rune.id] = rune;
