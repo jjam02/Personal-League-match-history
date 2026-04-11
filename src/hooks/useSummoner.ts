@@ -23,6 +23,7 @@ export function useSummoner() {
   const [error, setError] = useState<string | null>(null);
   const [matches, setMatches] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
+  const [rankedInfo, setRankedInfo] = useState<any>(null);
 
   async function searchSummoner(summonerName: string, summonerTag: string) {
     setLoading(true);
@@ -46,19 +47,22 @@ export function useSummoner() {
       const puuid = summonerInfo.puuid;
       const usernameTagData = await getUsernameTagByPuuid(puuid);
       const summonerInGameData = await getSummonerByPuuid(puuid);
-      await addSummoner(
-        puuid,
-        usernameTagData.gameName,
-        usernameTagData.tagLine,
-        summonerInGameData.profileIconId,
-        summonerInGameData.summonerLevel,
-      );
+      const rankedData = await getRankedInfoByPuuid(puuid);
+      console.log(rankedData);
+      setRankedInfo(rankedData);
+      // await addSummoner(
+      //   puuid,
+      //   usernameTagData.gameName,
+      //   usernameTagData.tagLine,
+      //   summonerInGameData.profileIconId,
+      //   summonerInGameData.summonerLevel,
+      // );
       const matchHistory = await getMatchHistoryByPuuid(puuid);
       const matchDetailsPromises = matchHistory.map((matchID: string) =>
         getMatchDetailsByMatchID(matchID),
       );
       const matchDetails = await Promise.all(matchDetailsPromises);
-      addMatchHistory(puuid, matchDetails);
+      //addMatchHistory(puuid, matchDetails);
       setMatches(cleanMatchData(matchDetails, puuid));
 
       setProfile({
@@ -77,5 +81,5 @@ export function useSummoner() {
     }
   }
 
-  return { loading, error, matches, searchSummoner, profile };
+  return { loading, error, matches, searchSummoner, profile, rankedInfo };
 }
