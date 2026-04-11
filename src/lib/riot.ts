@@ -52,3 +52,13 @@ export async function getMatchDetailsByMatchID(matchID: string) {
   ////console.log("MATCH DETAILS", data); // keep this for testing
   return data;
 }
+
+export async function getRankedInfoBySummonerID(summonerID: string) {
+  const response = await fetch(
+    `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}`,
+    { headers: { "X-Riot-Token": apiKeyRiot } },
+  );
+  const data = await response.json();
+  //console.log("RANKED INFO", data); // keep this for testing
+  return data;
+}

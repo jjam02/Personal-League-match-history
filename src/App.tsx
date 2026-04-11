@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import MatchCard from "./components/MatchCard";
 import StatsSummary from "./components/StatsSummary";
 import SummonerData from "./components/SummonerData";
+import RankedInfo from "./components/RankedInfo";
 import { useSummoner } from "./hooks/useSummoner";
 import { buildRuneMap } from "./util/util";
 
@@ -39,7 +40,10 @@ function App() {
       </div>
       <SearchBar searchSummoner={searchSummoner} loading={loading} />
       <div className="Profile-Container">
-        <SummonerData profile={profile} />
+        <div className="Profile-Info">
+          <SummonerData profile={profile} />
+          <RankedInfo />
+        </div>
         <div className="Stats-Match-Container">
           <StatsSummary matches={matches} patch={patch} />
           <MatchCard matches={matches} patch={patch} runes={runes} />
