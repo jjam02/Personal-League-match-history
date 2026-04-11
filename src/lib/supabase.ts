@@ -30,6 +30,24 @@ export async function addSummoner(
   //console.log("error:", error);
 }
 
+export async function addRankedInfo(puuid: string, rankedInfo: any[]) {
+  const rankedRows = rankedInfo.map((entry) => ({
+    summoner_puuid: puuid,
+    leagueid: entry.leagueId,
+    queuetype: entry.queueType,
+    tier: entry.tier,
+    rank: entry.rank,
+    leaguepoints: entry.leaguePoints,
+    wins: entry.wins,
+    losses: entry.losses,
+  }));
+
+  const { error } = await supabase
+    .from("ranked_info")
+    .upsert(rankedRows, { onConflict: "leagueid" });
+
+  //if (error) //console.error("addRankedInfo error:", error);
+}
 export async function addMatchHistory(puuid: string, matches: any[]) {
   const matchRows = matches.map((match) => {
     const participant = match.info.participants.find(
@@ -90,7 +108,7 @@ export async function getMatchesDB(puuid: string) {
 }
 
 export function cleanMatchData(matchArray: any[], puuid: string) {
-  console.log("CLEANING MATCH DATA", matchArray); // keep this for testing
+  //console.log("CLEANING MATCH DATA", matchArray); // keep this for testing
   const cleanMatchData = matchArray.map((match: any) => {
     const participant = match.info.participants.find(
       (p: any) => p.puuid === puuid,

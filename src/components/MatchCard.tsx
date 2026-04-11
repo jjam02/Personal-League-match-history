@@ -10,7 +10,7 @@ interface MatchCardProps {
 }
 
 function MatchCard({ matches, patch, runes }: MatchCardProps) {
-  console.log(runes); // keep this for testing
+  //console.log(runes); // keep this for testing
 
   return (
     <div className="match-card">

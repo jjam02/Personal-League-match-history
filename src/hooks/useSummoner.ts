@@ -5,6 +5,7 @@ import {
   getMatchHistoryByPuuid,
   getMatchDetailsByMatchID,
   getUsernameTagByPuuid,
+  getRankedInfoByPuuid,
 } from "../lib/riot";
 
 import {
