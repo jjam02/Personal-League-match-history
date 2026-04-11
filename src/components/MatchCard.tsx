@@ -14,7 +14,6 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
 
   return (
     <div className="match-card">
-      <h3>Match Card</h3>
       {matches.map((match, index) => (
         <div
           key={match.match_id ?? index}
