@@ -53,9 +53,9 @@ export async function getMatchDetailsByMatchID(matchID: string) {
   return data;
 }
 
-export async function getRankedInfoBySummonerID(summonerID: string) {
+export async function getRankedInfoBySummonerID(puuid: string) {
   const response = await fetch(
-    `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerID}`,
+    `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();
