@@ -1,3 +1,5 @@
+import { ranked_queues } from "../types";
+
 interface RankedInfoProps {
   rankedInfo: any;
 }
@@ -10,12 +12,23 @@ function RankedInfo({ rankedInfo }: RankedInfoProps) {
       {rankedInfo &&
         rankedInfo.map((info: any, index: number) => (
           <div key={index}>
-            <p>{info.queueType}</p>
+            <p>
+              {ranked_queues[info.queueType as keyof typeof ranked_queues] ||
+                info.queueType}
+            </p>
             <p> {info.tier}</p>
+            <img
+              src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/${info.tier.toLowerCase()}.png`}
+              alt={`${info.tier} emblem`}
+              width={128}
+              height={128}
+            />
             <p> {info.rank}</p>
             <p> {info.leaguepoints}</p>
-            <p>W:{info.wins}</p>
-            <p>L:{info.losses}</p>
+
+            <p>
+              W:{info.wins} L:{info.losses}
+            </p>
           </div>
         ))}
     </div>

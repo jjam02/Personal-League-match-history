@@ -50,3 +50,8 @@ export const SUMMONER_SPELLS: Record<number, string> = {
   32: "SummonerSnowball",
   12: "SummonerTeleport",
 };
+
+export const ranked_queues = {
+  RANKED_SOLO_5x5: "Ranked Solo/Duo",
+  RANKED_FLEX_SR: "Ranked Flex",
+};
