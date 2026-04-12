@@ -11,8 +11,10 @@ import {
 import {
   addSummoner,
   addMatchHistory,
+  addRankedInfo,
   getSummonerDB,
   getMatchesDB,
+  getRankedInfoDB,
   cleanMatchData,
 } from "../lib/supabase";
 
@@ -38,8 +40,10 @@ export function useSummoner() {
         console.log("SUMMONER FOUND IN DB, FETCHING MATCHES"); // keep this for testing
         const summonerData = existingSummoner;
         const matchHistory = await getMatchesDB(summonerData.puuid);
+        const rankedData = await getRankedInfoDB(summonerData.puuid);
         setMatches(matchHistory);
         setProfile(existingSummoner);
+        setRankedInfo(rankedData);
         //console.log("set the profile", profile);
         return;
       }
@@ -51,19 +55,19 @@ export function useSummoner() {
       const rankedData = await getRankedInfoByPuuid(puuid);
       console.log(rankedData);
 
-      // await addSummoner(
-      //   puuid,
-      //   usernameTagData.gameName,
-      //   usernameTagData.tagLine,
-      //   summonerInGameData.profileIconId,
-      //   summonerInGameData.summonerLevel,
-      // );
+      await addSummoner(
+        puuid,
+        usernameTagData.gameName,
+        usernameTagData.tagLine,
+        summonerInGameData.profileIconId,
+        summonerInGameData.summonerLevel,
+      );
       const matchHistory = await getMatchHistoryByPuuid(puuid);
       const matchDetailsPromises = matchHistory.map((matchID: string) =>
         getMatchDetailsByMatchID(matchID),
       );
       const matchDetails = await Promise.all(matchDetailsPromises);
-      //addMatchHistory(puuid, matchDetails);
+      await addMatchHistory(puuid, matchDetails);
       setMatches(cleanMatchData(matchDetails, puuid));
 
       setProfile({
@@ -73,6 +77,7 @@ export function useSummoner() {
         summoner_tag: usernameTagData.tagLine,
       });
       setRankedInfo(rankedData);
+      await addRankedInfo(puuid, rankedData);
 
       // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {

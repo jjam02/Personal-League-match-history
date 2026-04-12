@@ -43,10 +43,10 @@ export async function addRankedInfo(puuid: string, rankedInfo: any[]) {
   }));
 
   const { error } = await supabase
-    .from("ranked_info")
-    .upsert(rankedRows, { onConflict: "leagueid" });
+    .from("ranked")
+    .upsert(rankedRows, { onConflict: "summoner_puuid,queuetype" });
 
-  //if (error) //console.error("addRankedInfo error:", error);
+  if (error) console.error("addRankedInfo error:", error);
 }
 export async function addMatchHistory(puuid: string, matches: any[]) {
   const matchRows = matches.map((match) => {
@@ -104,6 +104,14 @@ export async function getMatchesDB(puuid: string) {
     .select("*")
     .eq("summoner_puuid", puuid)
     .order("played_at", { ascending: false });
+  return data || [];
+}
+export async function getRankedInfoDB(puuid: string) {
+  const { data, error } = await supabase
+    .from("ranked")
+    .select("*")
+    .eq("summoner_puuid", puuid)
+    .order("queuetype", { ascending: false });
   return data || [];
 }
 
