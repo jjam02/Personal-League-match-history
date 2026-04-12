@@ -27,6 +27,10 @@ function RankedInfo({ rankedInfo }: RankedInfoProps) {
             <p>
               W:{info.wins} L:{info.losses}
             </p>
+            <p>
+              WR:
+              {((info.wins / (info.wins + info.losses)) * 100).toFixed(0)}%
+            </p>
           </div>
         ))}
     </div>

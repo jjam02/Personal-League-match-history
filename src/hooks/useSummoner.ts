@@ -32,6 +32,7 @@ export function useSummoner() {
       setError(null); // Clear error on new search
       setMatches([]); // Clear previous matches on new search
       setProfile(null); // Clear previous profile on new search
+      setRankedInfo(null); // Clear previous ranked info on new search
       const existingSummoner = await getSummonerDB(summonerName, summonerTag);
       if (existingSummoner) {
         console.log("SUMMONER FOUND IN DB, FETCHING MATCHES"); // keep this for testing
@@ -49,7 +50,7 @@ export function useSummoner() {
       const summonerInGameData = await getSummonerByPuuid(puuid);
       const rankedData = await getRankedInfoByPuuid(puuid);
       console.log(rankedData);
-      setRankedInfo(rankedData);
+
       // await addSummoner(
       //   puuid,
       //   usernameTagData.gameName,
@@ -71,6 +72,7 @@ export function useSummoner() {
         summoner_name: usernameTagData.gameName,
         summoner_tag: usernameTagData.tagLine,
       });
+      setRankedInfo(rankedData);
 
       // console.log("MATCHES STATE:", matches); // keep this for testing
     } catch (err) {
