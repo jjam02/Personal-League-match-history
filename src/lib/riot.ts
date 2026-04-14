@@ -33,9 +33,12 @@ export async function getUsernameTagByPuuid(puuid: string) {
   return data;
 }
 
-export async function getMatchHistoryByPuuid(puuid: string) {
+export async function getMatchHistoryByPuuid(
+  puuid: string,
+  offset: number = 0,
+) {
   const response = await fetch(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10`,
+    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${offset}&count=${5}`,
     { headers: { "X-Riot-Token": apiKeyRiot } },
   );
   const data = await response.json();

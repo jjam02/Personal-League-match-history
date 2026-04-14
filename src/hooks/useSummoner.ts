@@ -84,9 +84,22 @@ export function useSummoner() {
 
   async function loadMore(puuid: string) {
     console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
-    const newOffset = offset + 10;
-    const newMatches = await getMatchesDB(puuid, newOffset);
+    console.log("CURRENT OFFSET:", offset); // keep this for testing
+    const newOffset = offset + 5;
+    let newMatches = await getMatchesDB(puuid, newOffset);
+    if (newMatches.length < 5) {
+      console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
+      newMatches = await getMatchHistoryByPuuid(puuid, newOffset);
+      const matchDetails = await Promise.all(
+        newMatches.map((matchID: string) => getMatchDetailsByMatchID(matchID)),
+      );
+      console.log("FETCHED MATCH DETAILS FOR NEW MATCHES", matchDetails); // keep this for testing
+      await addMatchHistory(puuid, matchDetails);
+      newMatches = cleanMatchData(matchDetails, puuid);
+    }
+    console.log("NEW MATCHES LOADED:", newMatches.length); // keep this for testing
     setMatches((prev) => [...prev, ...newMatches]);
+    console.log("UPDATED MATCHES LENGTH:", matches.length + newMatches.length); // keep this for testing
     setOffset(newOffset);
   }
 

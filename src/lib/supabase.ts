@@ -50,6 +50,7 @@ export async function addRankedInfo(puuid: string, rankedInfo: any[]) {
   if (error) console.error("addRankedInfo error:", error);
 }
 export async function addMatchHistory(puuid: string, matches: any[]) {
+  //console.log("MATCHES", matches); // keep this for testing
   const matchRows = matches.map((match) => {
     const participant = match.info.participants.find(
       (p: any) => p.puuid === puuid,
@@ -99,12 +100,13 @@ export async function getSummonerDB(summonerName: string, summonerTag: string) {
   return data || null;
 }
 
-export async function getMatchesDB(puuid: string) {
+export async function getMatchesDB(puuid: string, offset: number = 0) {
   const { data, error } = await supabase
     .from("matches")
     .select("*")
     .eq("summoner_puuid", puuid)
-    .order("played_at", { ascending: false });
+    .order("played_at", { ascending: false })
+    .range(offset, offset + 9);
   return data || [];
 }
 export async function getRankedInfoDB(puuid: string) {
