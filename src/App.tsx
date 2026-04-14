@@ -9,8 +9,15 @@ import { useSummoner } from "./hooks/useSummoner";
 import { buildRuneMap } from "./util/util";
 
 function App() {
-  const { searchSummoner, loading, error, matches, profile, rankedInfo } =
-    useSummoner();
+  const {
+    searchSummoner,
+    loading,
+    error,
+    matches,
+    profile,
+    rankedInfo,
+    loadMore,
+  } = useSummoner();
   const [patch, setPatch] = useState("16.6.1"); // fallback if fetch fails
   const [runes, setRunes] = useState({});
 
@@ -47,7 +54,13 @@ function App() {
         </div>
         <div className="Stats-Match-Container">
           <StatsSummary matches={matches} patch={patch} />
-          <MatchCard matches={matches} patch={patch} runes={runes} />
+          <MatchCard
+            matches={matches}
+            patch={patch}
+            runes={runes}
+            LoadMore={loadMore}
+            puuid={profile?.puuid || ""}
+          />
         </div>
       </div>
 

@@ -83,6 +83,7 @@ export function useSummoner() {
   }
 
   async function loadMore(puuid: string) {
+    console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
     const newOffset = offset + 10;
     const newMatches = await getMatchesDB(puuid, newOffset);
     setMatches((prev) => [...prev, ...newMatches]);

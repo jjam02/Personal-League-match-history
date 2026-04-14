@@ -7,9 +7,11 @@ interface MatchCardProps {
   matches: any[];
   patch: string;
   runes: Record<number, any>;
+  LoadMore: (puuid: string) => Promise<void>;
+  puuid?: string;
 }
 
-function MatchCard({ matches, patch, runes }: MatchCardProps) {
+function MatchCard({ matches, patch, runes, LoadMore, puuid }: MatchCardProps) {
   //console.log(runes); // keep this for testing
 
   return (
@@ -42,6 +44,14 @@ function MatchCard({ matches, patch, runes }: MatchCardProps) {
           </div>
         </div>
       ))}
+      <button
+        onClick={() => {
+          LoadMore(puuid || "");
+        }}
+        className="load-more match-card-item"
+      >
+        Load More
+      </button>
     </div>
   );
 }
