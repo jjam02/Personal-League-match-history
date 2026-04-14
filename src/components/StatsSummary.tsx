@@ -32,14 +32,20 @@ function StatsSummary({ matches, patch }: StatsSummaryProps) {
         )}
       </p>
       <p>
-        {matches.reduce((sum, match) => sum + match.kills, 0) /
-          matches.length || 0}
+        {(
+          matches.reduce((sum, match) => sum + match.kills, 0) /
+            matches.length || 0
+        ).toFixed(1)}
         /
-        {matches.reduce((sum, match) => sum + match.deaths, 0) /
-          matches.length || 0}
+        {(
+          matches.reduce((sum, match) => sum + match.deaths, 0) /
+            matches.length || 0
+        ).toFixed(1)}
         /
-        {matches.reduce((sum, match) => sum + match.assists, 0) /
-          matches.length || 0}
+        {(
+          matches.reduce((sum, match) => sum + match.assists, 0) /
+            matches.length || 0
+        ).toFixed(1)}
       </p>
       <div id="most-played">
         <p>Most Played:</p>
