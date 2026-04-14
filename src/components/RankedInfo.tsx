@@ -5,7 +5,7 @@ interface RankedInfoProps {
 }
 
 function RankedInfo({ rankedInfo }: RankedInfoProps) {
-  console.log("RANKED INFO", rankedInfo); // keep this for testing
+  //console.log("RANKED INFO", rankedInfo); // keep this for testing
   return (
     <div className="ranked-info">
       {rankedInfo &&

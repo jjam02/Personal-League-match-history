@@ -22,6 +22,7 @@ export async function addSummoner(
       puuid: puuid,
       icon_id: icon_id,
       level: level,
+      last_fetched: new Date().toISOString(),
     },
     { onConflict: "puuid" },
   );
@@ -86,7 +87,7 @@ export async function addMatchHistory(puuid: string, matches: any[]) {
 }
 
 export async function getSummonerDB(summonerName: string, summonerTag: string) {
-  //console.log("GETTING PUUID FROM DB FOR", summonerName, summonerTag); // keep this for testing
+  // console.log("GETTING PUUID FROM DB FOR", summonerName, summonerTag); // keep this for testing
   const { data, error } = await supabase
     .from("summoners")
     .select("*")
