@@ -30,6 +30,7 @@ export const QUEUE_TYPES: Record<number, string> = {
   450: "ARAM",
   400: "Normal Draft",
   490: "Normal Quickplay",
+  32: "Co-op vs AI",
   700: "Clash",
   1700: "Arena",
   1900: "URF",

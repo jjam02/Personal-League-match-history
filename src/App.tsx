@@ -22,9 +22,16 @@ function App() {
   } = useSummoner();
   const [patch, setPatch] = useState("16.6.1"); // fallback if fetch fails
   const [runes, setRunes] = useState({});
-  const [filter, setFilter] = useState<"all" | "solo/duo" | "flex" | "aram">(
-    "all",
-  );
+  const [filter, setFilter] = useState<
+    | "all"
+    | "solo/duo"
+    | "flex"
+    | "aram"
+    | "normal"
+    | "coopvai"
+    | "clash"
+    | "arena"
+  >("all");
   const [filteredMatches, setFilteredMatches] = useState(matches);
 
   useEffect(() => {
@@ -41,6 +48,14 @@ function App() {
             return match.queue_id === 440;
           case "aram":
             return match.queue_id === 450;
+          case "normal":
+            return match.queue_id === 400 || match.queue_id === 490;
+          case "coopvai":
+            return match.queue_id === 32 || match.queue_id === 33;
+          case "clash":
+            return match.queue_id === 700;
+          case "arena":
+            return match.queue_id === 1700 || match.queue_id === 1710;
           default:
             return false;
         }
