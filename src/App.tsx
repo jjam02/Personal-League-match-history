@@ -94,7 +94,7 @@ function App() {
         </p>
       </div>
       <SearchBar searchSummoner={searchSummoner} loading={loading} />
-      {profile && <FilterBar key={profile.puuid} setFilter={setFilter} />}
+      {profile && <FilterBar key={profile.puuid} setFilter={setFilter} currentFilter={filter} />}
 
       <div className="Profile-Container">
         <div className="Profile-Info">

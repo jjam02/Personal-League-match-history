@@ -12,9 +12,10 @@ interface FilterBarProps {
       | "clash"
       | "arena",
   ) => void;
+  currentFilter: string;
 }
 
-function FilterBar({ setFilter }: FilterBarProps) {
+function FilterBar({ setFilter, currentFilter }: FilterBarProps) {
   const [selectedQueue, setSelectedQueue] = useState("");
 
   const handleQueueSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,15 +33,39 @@ function FilterBar({ setFilter }: FilterBarProps) {
 
   return (
     <div className="Filter-Bar">
-      <button onClick={() => setFilter("all")}>ALL</button>
-      <button onClick={() => setFilter("solo/duo")}>Solo/Duo</button>
-      <button onClick={() => setFilter("flex")}>Flex</button>
-      <button onClick={() => setFilter("aram")}>ARAM</button>
+      <button
+        onClick={() => setFilter("all")}
+        className={currentFilter === "all" ? "active" : ""}
+      >
+        ALL
+      </button>
+      <button
+        onClick={() => setFilter("solo/duo")}
+        className={currentFilter === "solo/duo" ? "active" : ""}
+      >
+        Solo/Duo
+      </button>
+      <button
+        onClick={() => setFilter("flex")}
+        className={currentFilter === "flex" ? "active" : ""}
+      >
+        Flex
+      </button>
+      <button
+        onClick={() => setFilter("aram")}
+        className={currentFilter === "aram" ? "active" : ""}
+      >
+        ARAM
+      </button>
 
       <select
         value={selectedQueue}
         onChange={handleQueueSelect}
-        className="queue-dropdown"
+        className={`queue-dropdown ${
+          ["normal", "coopvai", "clash", "arena"].includes(currentFilter)
+            ? "active"
+            : ""
+        }`}
       >
         <option value="" disabled>
           Other Queues
