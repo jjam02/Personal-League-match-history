@@ -79,6 +79,11 @@ function App() {
       .catch(() => console.error("Failed to fetch runes data"));
   }, [patch]); // get new patch data when patch changes
 
+  // Reset filter when a new summoner is searched
+  useEffect(() => {
+    setFilter("all");
+  }, [profile?.puuid]); // reset when profile changes
+
   return (
     <>
       <div>
@@ -89,7 +94,7 @@ function App() {
         </p>
       </div>
       <SearchBar searchSummoner={searchSummoner} loading={loading} />
-      <FilterBar setFilter={setFilter} />
+      {profile && <FilterBar key={profile.puuid} setFilter={setFilter} />}
 
       <div className="Profile-Container">
         <div className="Profile-Info">
