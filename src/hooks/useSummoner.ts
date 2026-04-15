@@ -117,7 +117,7 @@ export function useSummoner() {
         const matchDetails = await Promise.all(
           matchIDs.map((matchID: string) => getMatchDetailsByMatchID(matchID)),
         );
-        console.log("FETCHED MATCH DETAILS FROM RIOT", matchDetails); // keep this for testing
+        //console.log(\"FETCHED MATCH DETAILS FROM RIOT\", matchDetails); // keep this for testing
         await addMatchHistory(puuid, matchDetails);
         newMatches = cleanMatchData(matchDetails, puuid);
       } else if (newMatches.length < 10) {
