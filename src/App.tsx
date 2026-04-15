@@ -35,8 +35,8 @@ function App() {
   const [filteredMatches, setFilteredMatches] = useState(matches);
 
   useEffect(() => {
-    console.log("FILTERING MATCHES", filter);
-    console.log("ALL MATCHES", matches);
+    //console.log("FILTERING MATCHES", filter);
+    //console.log("ALL MATCHES", matches);
     setFilteredMatches(
       matches.filter((match) => {
         switch (filter) {

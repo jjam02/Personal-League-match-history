@@ -21,7 +21,7 @@ function MatchCard({
   loadingMore,
 }: MatchCardProps) {
   //console.log(runes); // keep this for testing
-  console.log("Rendering MatchCard with matches:", matches); // keep this for testing
+  //console.log("Rendering MatchCard with matches:", matches); // keep this for testing
   return (
     <div className="match-card">
       {matches.map((match, index) => (

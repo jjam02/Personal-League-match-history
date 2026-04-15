@@ -37,7 +37,7 @@ export function useSummoner() {
   }
 
   async function loadFromDB(summoner: any) {
-    console.log("SUMMONER FOUND IN DB, FETCHING MATCHES");
+    //console.log("SUMMONER FOUND IN DB, FETCHING MATCHES");
     const matchHistory = await getMatchesDB(summoner.puuid);
     const rankedData = await getRankedInfoDB(summoner.puuid);
     setMatches(matchHistory);
@@ -49,7 +49,7 @@ export function useSummoner() {
   }
 
   async function fetchFromRiot(summonerName: string, summonerTag: string) {
-    console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API");
+    //console.log("NO SUMMONER IN DB, FETCHING FROM RIOT API");
     const summonerInfo = await getPuuidByName(summonerName, summonerTag);
     const puuid = summonerInfo.puuid;
 
@@ -94,22 +94,22 @@ export function useSummoner() {
       return;
     }
     if (loadingMore) {
-      console.log("Already loading more, skipping duplicate request");
+      //console.log("Already loading more, skipping duplicate request");
       return;
     }
 
     setLoadingMore(true);
     try {
-      console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
-      console.log("CURRENT OFFSET:", offset); // keep this for testing
+      //console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
+      //console.log("CURRENT OFFSET:", offset); // keep this for testing
       const newOffset = offset + 10;
       let newMatches = await getMatchesDB(puuid, newOffset);
 
       if (newMatches.length === 0) {
-        console.log("NO MATCHES FROM DB, FETCHING FROM RIOT API"); // keep this for testing
+        //console.log("NO MATCHES FROM DB, FETCHING FROM RIOT API"); // keep this for testing
         const matchIDs = await getMatchHistoryByPuuid(puuid, newOffset);
         if (matchIDs.length === 0) {
-          console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
+          //console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
           setError("No more matches to load");
           setLoadingMore(false);
           return;
@@ -121,7 +121,7 @@ export function useSummoner() {
         await addMatchHistory(puuid, matchDetails);
         newMatches = cleanMatchData(matchDetails, puuid);
       } else if (newMatches.length < 10) {
-        console.log("FEWER THAN 10 FROM DB, FETCHING MORE FROM RIOT"); // keep this for testing
+        //console.log("FEWER THAN 10 FROM DB, FETCHING MORE FROM RIOT"); // keep this for testing
         const matchIDs = await getMatchHistoryByPuuid(puuid, newOffset);
         if (matchIDs.length > 0) {
           const matchDetails = await Promise.all(
@@ -129,14 +129,14 @@ export function useSummoner() {
               getMatchDetailsByMatchID(matchID),
             ),
           );
-          console.log("FETCHED MATCH DETAILS FROM RIOT", matchDetails); // keep this for testing
+          //console.log("FETCHED MATCH DETAILS FROM RIOT", matchDetails); // keep this for testing
           await addMatchHistory(puuid, matchDetails);
           const riotMatches = cleanMatchData(matchDetails, puuid);
           newMatches = [...newMatches, ...riotMatches];
         }
       }
 
-      console.log("NEW MATCHES LOADED:", newMatches.length); // keep this for testing
+      //console.log("NEW MATCHES LOADED:", newMatches.length); // keep this for testing
       setMatches((prev) => [...prev, ...newMatches]);
       setOffset(newOffset);
     } catch (err) {
@@ -150,15 +150,15 @@ export function useSummoner() {
   async function searchSummoner(summonerName: string, summonerTag: string) {
     setLoading(true);
     try {
-      console.log("SEARCHING FOR SUMMONER:", summonerName, summonerTag); // keep this for testing
+      //console.log("SEARCHING FOR SUMMONER:", summonerName, summonerTag); // keep this for testing
       clearState();
       const existingSummoner = await getSummonerDB(summonerName, summonerTag);
       const isStale =
         existingSummoner &&
         Date.now() - new Date(existingSummoner.last_fetched).getTime() >
           STALE_THRESHOLD_MS;
-      console.log("EXISTING SUMMONER:", existingSummoner); // keep this for testing
-      console.log("IS STALE?", isStale); // keep this for testing
+      //console.log("EXISTING SUMMONER:", existingSummoner); // keep this for testing
+      //console.log("IS STALE?", isStale); // keep this for testing
       if (existingSummoner && !isStale) {
         await loadFromDB(existingSummoner);
       } else {
