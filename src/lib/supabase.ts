@@ -106,7 +106,8 @@ export async function getMatchesDB(puuid: string, offset: number = 0) {
     .select("*")
     .eq("summoner_puuid", puuid)
     .order("played_at", { ascending: false })
-    .range(offset, offset + 9);
+    .range(offset, offset + 4);
+  if (error) console.error("getMatchesDB error:", error);
   return data || [];
 }
 export async function getRankedInfoDB(puuid: string) {

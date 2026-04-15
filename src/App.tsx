@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 import MatchCard from "./components/MatchCard";
@@ -13,6 +13,7 @@ function App() {
   const {
     searchSummoner,
     loading,
+    loadingMore,
     error,
     matches,
     profile,
@@ -21,6 +22,31 @@ function App() {
   } = useSummoner();
   const [patch, setPatch] = useState("16.6.1"); // fallback if fetch fails
   const [runes, setRunes] = useState({});
+  const [filter, setFilter] = useState<"all" | "solo/duo" | "flex" | "aram">(
+    "all",
+  );
+  const [filteredMatches, setFilteredMatches] = useState(matches);
+
+  useEffect(() => {
+    console.log("FILTERING MATCHES", filter);
+    console.log("ALL MATCHES", matches);
+    setFilteredMatches(
+      matches.filter((match) => {
+        switch (filter) {
+          case "all":
+            return true;
+          case "solo/duo":
+            return match.queue_id === 420;
+          case "flex":
+            return match.queue_id === 440;
+          case "aram":
+            return match.queue_id === 450;
+          default:
+            return false;
+        }
+      }),
+    );
+  }, [filter, matches]); // re-run when filter OR matches changes
 
   useEffect(() => {
     fetch("https://ddragon.leagueoflegends.com/api/versions.json")
@@ -48,20 +74,22 @@ function App() {
         </p>
       </div>
       <SearchBar searchSummoner={searchSummoner} loading={loading} />
+      <FilterBar setFilter={setFilter} />
+
       <div className="Profile-Container">
-        <FilterBar />
         <div className="Profile-Info">
           <SummonerData profile={profile} />
           <RankedInfo rankedInfo={rankedInfo} />
         </div>
         <div className="Stats-Match-Container">
-          <StatsSummary matches={matches} patch={patch} />
+          <StatsSummary matches={filteredMatches} patch={patch} />
           <MatchCard
-            matches={matches}
+            matches={filteredMatches}
             patch={patch}
             runes={runes}
             LoadMore={loadMore}
             puuid={profile?.puuid || ""}
+            loadingMore={loadingMore}
           />
         </div>
       </div>

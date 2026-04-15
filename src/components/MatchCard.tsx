@@ -9,11 +9,19 @@ interface MatchCardProps {
   runes: Record<number, any>;
   LoadMore: (puuid: string) => Promise<void>;
   puuid?: string;
+  loadingMore?: boolean;
 }
 
-function MatchCard({ matches, patch, runes, LoadMore, puuid }: MatchCardProps) {
+function MatchCard({
+  matches,
+  patch,
+  runes,
+  LoadMore,
+  puuid,
+  loadingMore,
+}: MatchCardProps) {
   //console.log(runes); // keep this for testing
-
+  console.log("Rendering MatchCard with matches:", matches); // keep this for testing
   return (
     <div className="match-card">
       {matches.map((match, index) => (
@@ -50,8 +58,9 @@ function MatchCard({ matches, patch, runes, LoadMore, puuid }: MatchCardProps) {
             LoadMore(puuid || "");
           }}
           className="load-more match-card-item"
+          disabled={loadingMore}
         >
-          Load More
+          {loadingMore ? "Loading..." : "Load More"}
         </button>
       )}
     </div>

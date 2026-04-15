@@ -246,3 +246,13 @@
   background: grey;
   border-radius: 8px;
 }
+
+.Filter-Bar {
+  background: grey;
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

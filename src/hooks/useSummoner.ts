@@ -21,6 +21,7 @@ const STALE_THRESHOLD_MS = 5 * 60 * 1000;
 
 export function useSummoner() {
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [matches, setMatches] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
@@ -40,7 +41,10 @@ export function useSummoner() {
     const matchHistory = await getMatchesDB(summoner.puuid);
     const rankedData = await getRankedInfoDB(summoner.puuid);
     setMatches(matchHistory);
-    setProfile(summoner);
+    setProfile({
+      ...summoner,
+      puuid: summoner.puuid,
+    });
     setRankedInfo(rankedData);
   }
 
@@ -74,6 +78,7 @@ export function useSummoner() {
 
     setMatches(cleanMatchData(matchDetails, puuid));
     setProfile({
+      puuid: puuid,
       icon_id: summonerInGameData.profileIconId,
       level: summonerInGameData.summonerLevel,
       summoner_name: usernameTagData.gameName,
@@ -83,24 +88,54 @@ export function useSummoner() {
   }
 
   async function loadMore(puuid: string) {
-    console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
-    console.log("CURRENT OFFSET:", offset); // keep this for testing
-    const newOffset = offset + 5;
-    let newMatches = await getMatchesDB(puuid, newOffset);
-    if (newMatches.length < 5) {
-      console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
-      newMatches = await getMatchHistoryByPuuid(puuid, newOffset);
-      const matchDetails = await Promise.all(
-        newMatches.map((matchID: string) => getMatchDetailsByMatchID(matchID)),
-      );
-      console.log("FETCHED MATCH DETAILS FOR NEW MATCHES", matchDetails); // keep this for testing
-      await addMatchHistory(puuid, matchDetails);
-      newMatches = cleanMatchData(matchDetails, puuid);
+    if (!puuid) {
+      console.error("loadMore called with empty puuid");
+      setError("Cannot load more matches: missing summoner data");
+      return;
     }
-    console.log("NEW MATCHES LOADED:", newMatches.length); // keep this for testing
-    setMatches((prev) => [...prev, ...newMatches]);
-    console.log("UPDATED MATCHES LENGTH:", matches.length + newMatches.length); // keep this for testing
-    setOffset(newOffset);
+    if (loadingMore) {
+      console.log("Already loading more, skipping duplicate request");
+      return;
+    }
+
+    setLoadingMore(true);
+    try {
+      console.log("LOADING MORE MATCHES FOR", puuid); // keep this for testing
+      console.log("CURRENT OFFSET:", offset); // keep this for testing
+      const newOffset = offset + 10;
+      let newMatches = await getMatchesDB(puuid, newOffset);
+
+      if (newMatches.length === 0) {
+        console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
+        setError("No more matches to load");
+        setLoadingMore(false);
+        return;
+      }
+
+      if (newMatches.length < 10) {
+        console.log("Fewer than 10 matches from DB"); // keep this for testing
+        newMatches = await getMatchHistoryByPuuid(puuid, newOffset);
+        if (newMatches.length > 0) {
+          const matchDetails = await Promise.all(
+            newMatches.map((matchID: string) =>
+              getMatchDetailsByMatchID(matchID),
+            ),
+          );
+          console.log("FETCHED MATCH DETAILS FOR NEW MATCHES", matchDetails); // keep this for testing
+          await addMatchHistory(puuid, matchDetails);
+          newMatches = cleanMatchData(matchDetails, puuid);
+        }
+      }
+
+      console.log("NEW MATCHES LOADED:", newMatches.length); // keep this for testing
+      setMatches((prev) => [...prev, ...newMatches]);
+      setOffset(newOffset);
+    } catch (err) {
+      console.error("Error in loadMore:", err);
+      setError("Failed to load more matches");
+    } finally {
+      setLoadingMore(false);
+    }
   }
 
   async function searchSummoner(summonerName: string, summonerTag: string) {
@@ -129,6 +164,7 @@ export function useSummoner() {
 
   return {
     loading,
+    loadingMore,
     error,
     matches,
     searchSummoner,
