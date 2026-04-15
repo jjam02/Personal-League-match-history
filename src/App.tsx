@@ -86,7 +86,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="header">
         <h1>League of Legends Match History</h1>
         <p>
           Enter your summoner name and tag to view your recent match history and
@@ -114,7 +114,7 @@ function App() {
         </div>
       </div>
 
-      <div>{error && <p>{error}</p>}</div>
+      {error && <div className="error-message\">{error}</div>}
 
       <div className="ticks"></div>
 
