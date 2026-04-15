@@ -106,24 +106,33 @@ export function useSummoner() {
       let newMatches = await getMatchesDB(puuid, newOffset);
 
       if (newMatches.length === 0) {
-        console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
-        setError("No more matches to load");
-        setLoadingMore(false);
-        return;
-      }
-
-      if (newMatches.length < 10) {
-        console.log("Fewer than 10 matches from DB"); // keep this for testing
-        newMatches = await getMatchHistoryByPuuid(puuid, newOffset);
-        if (newMatches.length > 0) {
+        console.log("NO MATCHES FROM DB, FETCHING FROM RIOT API"); // keep this for testing
+        const matchIDs = await getMatchHistoryByPuuid(puuid, newOffset);
+        if (matchIDs.length === 0) {
+          console.log("NO MORE MATCHES TO LOAD"); // keep this for testing
+          setError("No more matches to load");
+          setLoadingMore(false);
+          return;
+        }
+        const matchDetails = await Promise.all(
+          matchIDs.map((matchID: string) => getMatchDetailsByMatchID(matchID)),
+        );
+        console.log("FETCHED MATCH DETAILS FROM RIOT", matchDetails); // keep this for testing
+        await addMatchHistory(puuid, matchDetails);
+        newMatches = cleanMatchData(matchDetails, puuid);
+      } else if (newMatches.length < 10) {
+        console.log("FEWER THAN 10 FROM DB, FETCHING MORE FROM RIOT"); // keep this for testing
+        const matchIDs = await getMatchHistoryByPuuid(puuid, newOffset);
+        if (matchIDs.length > 0) {
           const matchDetails = await Promise.all(
-            newMatches.map((matchID: string) =>
+            matchIDs.map((matchID: string) =>
               getMatchDetailsByMatchID(matchID),
             ),
           );
-          console.log("FETCHED MATCH DETAILS FOR NEW MATCHES", matchDetails); // keep this for testing
+          console.log("FETCHED MATCH DETAILS FROM RIOT", matchDetails); // keep this for testing
           await addMatchHistory(puuid, matchDetails);
-          newMatches = cleanMatchData(matchDetails, puuid);
+          const riotMatches = cleanMatchData(matchDetails, puuid);
+          newMatches = [...newMatches, ...riotMatches];
         }
       }
 
