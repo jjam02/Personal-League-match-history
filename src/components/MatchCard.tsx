@@ -44,14 +44,16 @@ function MatchCard({ matches, patch, runes, LoadMore, puuid }: MatchCardProps) {
           </div>
         </div>
       ))}
-      <button
-        onClick={() => {
-          LoadMore(puuid || "");
-        }}
-        className="load-more match-card-item"
-      >
-        Load More
-      </button>
+      {puuid && (
+        <button
+          onClick={() => {
+            LoadMore(puuid || "");
+          }}
+          className="load-more match-card-item"
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 }
